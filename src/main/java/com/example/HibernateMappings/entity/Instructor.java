@@ -14,8 +14,7 @@ public class Instructor {
     private int age;
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "instructor_detail_id")
+    @OneToOne(mappedBy = "instructor", cascade = CascadeType.ALL)
     private InstructorDetail instructorDetail;
 
     // for bidirectional for instructor and course.

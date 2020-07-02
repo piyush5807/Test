@@ -11,15 +11,16 @@ public class Course {
     private int id;
     private String title;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
-    @JoinColumn(name = "instructor_id")
+    @ManyToOne
+    @JoinColumn
     private Instructor instructor;
 
     public Course() {
     }
 
-    public Course(String title) {
+    public Course(String title, Instructor instructor) {
         this.title = title;
+        this.instructor = instructor;
     }
 
     public void setInstructor(Instructor instructor) {

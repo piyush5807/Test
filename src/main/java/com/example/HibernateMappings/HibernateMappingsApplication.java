@@ -31,29 +31,37 @@ public class HibernateMappingsApplication implements CommandLineRunner {
 	public void run(String... args) {
 
 		Instructor i1 = new Instructor("Sachin",25,"test@123");
-		InstructorDetail id1 = new InstructorDetail("sachinYoutube", "playing football");
+		instructorRepository.save(i1);
 
 		Instructor i2 = new Instructor("Thakur",25,"test1@123");
-		InstructorDetail id2 = new InstructorDetail("thakurYoutube", "Video games");
-
-		// binding instructor to instructor detail.
-		i1.setInstructorDetail(id1);
-		i2.setInstructorDetail(id2);
-
-		// as we have used CascadeType.ALL so save Instructor will also save Instructor detail.
-		instructorRepository.save(i1);
 		instructorRepository.save(i2);
 
+		InstructorDetail id1 = new InstructorDetail("sachinYoutube", "playing football", i1);
+
+		InstructorDetail id2 = new InstructorDetail("thakurYoutube", "Video games", i2);
+
+		instructorDetailRepository.save(id1);
+		instructorDetailRepository.save(id2);
+//
+//		// binding instructor to instructor detail.
+////		i1.setInstructorDetail(id1);
+////		i2.setInstructorDetail(id2);
+//
+//		// as we have used CascadeType.ALL so save Instructor will also save Instructor detail.
+//
+////		instructorRepository.save(i1);
+////		instructorRepository.save(i2);
+//
 		int theId = 1;
 		Instructor newInstructor = null;
 		newInstructor = instructorRepository.findById(theId);
 
-		Course course1 = new Course("CS01 - Operating System");
-		Course course2 = new Course("CS02 - Computer Networks");
-
-		newInstructor.addCourse(course1);
-		newInstructor.addCourse(course2);
-
+		Course course1 = new Course("CS01 - Operating System", newInstructor);
+		Course course2 = new Course("CS02 - Computer Networks", newInstructor);
+//
+//		newInstructor.addCourse(course1);
+//		newInstructor.addCourse(course2);
+//
 		courseRepository.save(course1);
 		courseRepository.save(course2);
 	}
