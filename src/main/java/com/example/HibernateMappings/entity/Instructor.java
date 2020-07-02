@@ -1,10 +1,8 @@
 package com.example.HibernateMappings.entity;
 
 import javax.persistence.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Instructor {
@@ -21,7 +19,7 @@ public class Instructor {
     private InstructorDetail instructorDetail;
 
     // for bidirectional for instructor and course.
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "instructor",cascade =  {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "instructor",cascade =  CascadeType.ALL)
     private List<Course> courseList;
 
     public Instructor() {
@@ -31,39 +29,6 @@ public class Instructor {
         this.name = name;
         this.age = age;
         this.email = email;
-        this.courseList = new ArrayList<>();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public InstructorDetail getInstructorDetail() {
@@ -86,8 +51,9 @@ public class Instructor {
     public void addCourse(Course newCourse) {
         if(courseList == null)
             courseList = new ArrayList<>();
-        newCourse.setInstructor(this); // for bidirectional relationship. for a new course we are adding instructor also.
         courseList.add(newCourse);
+        newCourse.setInstructor(this); // for bidirectional relationship. for a new course we are adding instructor also.
+
     }
 
     @Override
